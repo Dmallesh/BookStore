@@ -10,6 +10,13 @@ userSvc = userService.UserService()
 bookSvc = bookService.BookService()
 wishlistSvc = wishlistService.WishListService()
 
+
+@app.route('/')
+def index():
+    return 'Welcome to Book Store!'
+
+
+############# ERROR Handler  #####################
 @app.errorhandler(ErrorReponse)
 def handle_bad_request(error):
      response = dict(())
@@ -17,11 +24,6 @@ def handle_bad_request(error):
      response['internalLog'] = error.internalLog
      response['externalLog'] = error.externalLog
      return jsonify(response), error.statuscode
-
-
-@app.route('/')
-def index():
-    return 'Welcome to Book Store!'
 
 
 ################# WISH LIST API ##############################################
@@ -122,8 +124,8 @@ def updateUser(id):
     except Exception as e:
         raise ErrorReponse(str(e), 'Update user failed', 10008, requests.codes.internal_server_error)
 
-################# BOOK API ##############################################
 
+################# BOOK API ##############################################
 @app.route('/books',methods=['GET'])
 def GetBooks():
     try:

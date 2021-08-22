@@ -1,7 +1,4 @@
-from builtins import Exception
-
 from flask_restful import marshal_with, fields
-
 from models.bookstoremodels import User
 from repositories import userRepository
 
@@ -11,16 +8,6 @@ user_resource_fields = {
     'sLastName': fields.String,
     'sEmail': fields.String,
     'sPassword': fields.String
-}
-
-wishlist_resource_fields = {
-    'pkWishListId': fields.Integer,
-    'fkUserId': fields.Integer,
-    'fkBookId': fields.Integer,
-    'sTitle': fields.String,
-    'sAuthor': fields.String,
-    'sISBN': fields.String,
-    'dtPublished': fields.String
 }
 
 class UserService():
