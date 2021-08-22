@@ -2,8 +2,8 @@ from builtins import Exception
 
 from flask_restful import marshal_with, fields
 
-from models.bookstoremodels import User, WishList
-from repositories import userRepository, wishlistRepository
+from models.bookstoremodels import User
+from repositories import userRepository
 
 user_resource_fields = {
     'pkUserId': fields.Integer,
@@ -26,8 +26,6 @@ wishlist_resource_fields = {
 class UserService():
     def __init__(self):
         self.userRepo = userRepository.UserRepository()
-        self.wishlistRepo = wishlistRepository.WishListRepository()
-
 
     @marshal_with(user_resource_fields)
     def getAllUser(self):

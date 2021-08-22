@@ -1,8 +1,6 @@
-from services import userService, bookService
 from flask_restful import marshal_with, fields
-
-from models.bookstoremodels import User, WishList
-from repositories import wishlistRepository
+from models.bookstoremodels import WishList
+from repositories import wishlistRepository, userRepository , bookRepository
 
 
 wishlist_resource_fields = {
@@ -18,12 +16,12 @@ wishlist_resource_fields = {
 class WishListService():
     def __init__(self):
         self.wishlistRepo = wishlistRepository.WishListRepository()
-        self.userSvc = userService.UserService()
-        self.bookSvc = bookService.BookService()
+        self.userRepo = userRepository.UserRepository()
+        self.bookRepo = bookRepository.BookRepository()
 
     @marshal_with(wishlist_resource_fields)
     def getUserWishList(self, fkUserId):
-        findUser = self.userSvc.getUser(fkUserId)
+        findUser = self.userRepo.get_user(fkUserId)
         if findUser == None:
             raise ValueError("User not found!")
 
@@ -32,11 +30,11 @@ class WishListService():
 
 
     def addBookToWishList(self, fkUserId, fkBookId):
-        findUser = self.userSvc.getUser(fkUserId)
+        findUser = self.userRepo.get_user(fkUserId)
         if findUser == None:
             raise ValueError("User not found!")
 
-        findBook = self.bookSvc.getBook(fkBookId)
+        findBook = self.bookRepo.get_book(fkBookId)
         if findBook == None:
             raise ValueError("Book not found!")
 
@@ -48,11 +46,11 @@ class WishListService():
 
 
     def deleteBookFromWishList(self, fkUserId, fkBookId):
-        findUser = self.userSvc.getUser(fkUserId)
+        findUser = self.userRepo.get_user(fkUserId)
         if findUser == None:
             raise ValueError("User not found!")
 
-        findBook = self.bookSvc.getBook(fkBookId)
+        findBook = self.bookRepo.get_book(fkBookId)
         if findBook == None:
             raise ValueError("Book not found!")
 
@@ -61,11 +59,12 @@ class WishListService():
 
 
     def deleteAllBookFromWishList(self, fkUserId):
-        findUser = self.userSvc.getUser(fkUserId)
+        findUser = self.userRepo.get_user(fkUserId)
         if findUser == None:
             raise ValueError("User not found!")
 
         return self.wishlistRepo.delete_all_Book_wishlist(fkUserId)
+
 
 
 
