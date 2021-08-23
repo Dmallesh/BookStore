@@ -27,7 +27,7 @@ class WishList():
         self.dtPublished = dtPublished
 
 
-class ErrorReponse(Exception):
+class ErrorResponse(Exception):
     def __init__(self, internalLog, externalLog, errorCode, statusCode):
         self.internalLog = internalLog
         self.externalLog = externalLog

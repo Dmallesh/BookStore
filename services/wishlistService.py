@@ -28,7 +28,7 @@ class WishListService():
         data = self.wishlistRepo.get_wishlist(fkUserId)
         return [WishList(*x) for x in data]
 
-
+    @marshal_with(wishlist_resource_fields)
     def addBookToWishList(self, fkUserId, fkBookId):
         findUser = self.userRepo.get_user(fkUserId)
         if findUser == None:
@@ -38,15 +38,16 @@ class WishListService():
         if findBook == None:
             raise ValueError("Book not found!")
 
-        findWishList = self.wishlistRepo.check_book_exists_wishlist(fkUserId, fkBookId)
+        findWishList = self.wishlistRepo.get_wishlist_book_user(fkUserId, fkBookId)
         if findWishList != None:
             raise ValueError("Book is present in wishlist!")
 
-        return self.wishlistRepo.add_wishlist(fkUserId, fkBookId)
-
+        newrowid = self.wishlistRepo.add_wishlist(fkUserId, fkBookId)
+        data = self.wishlistRepo.get_wishlist_Id(newrowid)
+        return WishList(*data)
 
     def deleteBookFromWishList(self, fkUserId, fkBookId):
-        findWishList = self.wishlistRepo.check_book_exists_wishlist(fkUserId, fkBookId)
+        findWishList = self.wishlistRepo.get_wishlist_book_user(fkUserId, fkBookId)
         if findWishList == None:
             raise ValueError("Book not present in wishlist!")
 

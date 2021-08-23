@@ -82,16 +82,19 @@ def test_addbooktowishlist_returns_new_added_book_to_wishlist():
     # PREP up data
     requests.delete(DELETE_BOOK_URL.format(uid=USER,bid = BOOK))
 
-    currentWishListResponse = requests.get(GET_WISHLIST_URL.format(uid=USER))
-    currentWishlistCount = len(currentWishListResponse.json())
+    currentWishListResponse = requests.get(GET_WISHLIST_URL.format(uid=USER)).json()
+    currentWishlistCount = len(currentWishListResponse)
     response = requests.post(ADD_WISHLIST_URL.format(uid=USER,bid = BOOK))
     response_json = response.json()
-    newWishlistCount = len(response_json)
-    wishlistItems = [(data['fkUserId'], data['fkBookId']) for data in response_json]
+    newWishlistResponse = requests.get(GET_WISHLIST_URL.format(uid=USER)).json()
+    newWishlistCount = len(newWishlistResponse)
+    wishlistItems = [(data['fkUserId'], data['fkBookId']) for data in newWishlistResponse]
 
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
     assert currentWishlistCount+1 == newWishlistCount
     assert_that(wishlistItems).contains((USER, BOOK))
+    assert response_json['fkUserId'] == USER
+    assert response_json['fkBookId'] == BOOK
 
 
 def test_deletebookfromwishlist_returns_status_400_when_book_notpresent_in_wishlist():
