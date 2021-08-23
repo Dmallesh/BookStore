@@ -14,7 +14,7 @@ sqlite3 - Handle database connection
 
 Note: 
 Design document BookStore_Design.pdf is added in the project directory
-SQLite3 DB - BookStore.db file is the project directory used to save/retrieve the data
-BookStore.postman_collection.json in the project directory can used to validate/run data operations on the API
+Project Database is SQLite3 BookStore.db. File is added in the project directory. 
+BookStore.postman_collection.json in the project directory can be used to validate/run data operations on the API
 Unit test file is saved under '/tests' project directory
 
