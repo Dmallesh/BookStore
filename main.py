@@ -43,9 +43,7 @@ def AddBookToUserWishList(userid, bookid):
         wishlistSvc.addBookToWishList(userid, bookid)
         return jsonify(wishlistSvc.getUserWishList(userid))
     except ValueError as e:
-        raise ErrorReponse(str(e), str(e), 30003, requests.codes.not_found)
-    except ProcessLookupError as e:
-        raise ErrorReponse(str(e), str(e), 30004, requests.codes.bad_request)
+        raise ErrorReponse(str(e), str(e), 30003, requests.codes.bad_request)
     except Exception as e:
         raise ErrorReponse(str(e), 'Adding book to wish list failed!', 30005, requests.codes.internal_server_error)
 
@@ -56,7 +54,7 @@ def DeleteBookFromUserWishList(userid, bookid):
         wishlistSvc.deleteBookFromWishList(userid, bookid)
         return jsonify(wishlistSvc.getUserWishList(userid))
     except ValueError as e:
-        raise ErrorReponse(str(e), str(e), 30006, requests.codes.not_found)
+        raise ErrorReponse(str(e), str(e), 30006, requests.codes.bad_request)
     except Exception as e:
         raise ErrorReponse(str(e), 'Deleting book from wishlist failed!', 30007, requests.codes.internal_server_error)
 
@@ -67,7 +65,7 @@ def EmptyWishList(id):
         wishlistSvc.deleteAllBookFromWishList(id)
         return jsonify(wishlistSvc.getUserWishList(id))
     except ValueError as e:
-        raise ErrorReponse(str(e), str(e), 30008, requests.codes.not_found)
+        raise ErrorReponse(str(e), str(e), 30008, requests.codes.bad_request)
     except Exception as e:
         raise ErrorReponse(str(e), 'Empty wish list failed!', 30009, requests.codes.internal_server_error)
 

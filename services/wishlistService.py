@@ -40,20 +40,15 @@ class WishListService():
 
         findWishList = self.wishlistRepo.check_book_exists_wishlist(fkUserId, fkBookId)
         if findWishList != None:
-            raise ProcessLookupError("Book is present in wishlist ")
+            raise ValueError("Book is present in wishlist!")
 
         return self.wishlistRepo.add_wishlist(fkUserId, fkBookId)
 
 
     def deleteBookFromWishList(self, fkUserId, fkBookId):
-        findUser = self.userRepo.get_user(fkUserId)
-        if findUser == None:
-            raise ValueError("User not found!")
-
-        findBook = self.bookRepo.get_book(fkBookId)
-        if findBook == None:
-            raise ValueError("Book not found!")
-
+        findWishList = self.wishlistRepo.check_book_exists_wishlist(fkUserId, fkBookId)
+        if findWishList == None:
+            raise ValueError("Book not present in wishlist!")
 
         return self.wishlistRepo.delete_book_wishlist(fkUserId, fkBookId)
 

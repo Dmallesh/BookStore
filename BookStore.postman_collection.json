@@ -82,7 +82,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/user/1/book/3",
+					"raw": "http://127.0.0.1:5000/user/1/book/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -95,7 +95,7 @@
 						"user",
 						"1",
 						"book",
-						"3"
+						"4"
 					]
 				}
 			},
